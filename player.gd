@@ -21,11 +21,18 @@ func _process(delta: float) -> void:
 		velocity.x -= 1
 	if Input.is_action_pressed('move_right'):
 		velocity.x += 1
-	if Input.is_action_just_pressed('jump'):
+	if Input.is_action_pressed('jump'):
 		velocity.y -=1
 		
-	# TODO: choosing animations https://docs.godotengine.org/en/stable/getting_started/first_2d_game/03.coding_the_player.html
-	# TODO: gravity
+	if velocity.x != 0:
+		$AnimatedSprite2D.animation = "walk"
+		$AnimatedSprite2D.flip_v = false
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+	elif velocity.y != 0:
+		$AnimatedSprite2D.animation = "up"
+		$AnimatedSprite2D.flip_v = velocity.y > 0
+	else:
+		$AnimatedSprite2D.animation = "idle"
 
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
