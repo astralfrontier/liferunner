@@ -1,7 +1,5 @@
 extends Area2D
 
-signal hit
-
 @export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 
@@ -24,14 +22,19 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed('jump'):
 		velocity.y -=1
 		
-	if velocity.x != 0:
+	# Always apply a small gravitational force
+	velocity.y += 0.05
+		
+	if velocity.y < 0:
+		$AnimatedSprite2D.animation = "up"
+		$AnimatedSprite2D.flip_v = velocity.y > 0
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+	elif velocity.x != 0:
 		$AnimatedSprite2D.animation = "walk"
 		$AnimatedSprite2D.flip_v = false
 		$AnimatedSprite2D.flip_h = velocity.x < 0
-	elif velocity.y != 0:
-		$AnimatedSprite2D.animation = "up"
-		$AnimatedSprite2D.flip_v = velocity.y > 0
 	else:
+		$AnimatedSprite2D.flip_v = false
 		$AnimatedSprite2D.animation = "idle"
 
 	if velocity.length() > 0:
@@ -43,9 +46,6 @@ func _process(delta: float) -> void:
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
 
-
-func _on_body_entered(body: Node2D) -> void:
-	hide() # Player disappears after being hit.
-	hit.emit()
+func _on_body_entered(_body: Node2D) -> void:
 	# Must be deferred as we can't change physics properties on a physics callback.
 	$CollisionShape2D.set_deferred("disabled", true)
