@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://qdtl56xdrxbt"]
+[gd_scene load_steps=4 format=3 uid="uid://qdtl56xdrxbt"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_3ir4a"]
 [ext_resource type="PackedScene" uid="uid://bgympwuwj6336" path="res://Player.tscn" id="2_ah4dq"]
+[ext_resource type="PackedScene" uid="uid://cg601vf03q27x" path="res://GameOfLife.tscn" id="3_parv5"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_3ir4a")
 
 [node name="Player" parent="." instance=ExtResource("2_ah4dq")]
+
+[node name="GameOfLife" parent="." instance=ExtResource("3_parv5")]
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(240, 450)
