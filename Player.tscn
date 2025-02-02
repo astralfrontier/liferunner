@@ -39,7 +39,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_afcrw"]
 size = Vector2(61, 93)
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 2
 script = ExtResource("1_rc44d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -49,5 +50,3 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 8.5)
 shape = SubResource("RectangleShape2D_afcrw")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

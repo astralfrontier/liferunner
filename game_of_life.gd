@@ -1,17 +1,9 @@
-extends Node2D
+extends TileMapLayer
 
 # https://github.com/NexusrexDev/GodotGameOfLife/blob/master/Base.gd
 
 var grid_size # Size of the game window.
 var cells: Array
-
-func cells_to_pattern() -> TileMapPattern:
-	var pattern: TileMapPattern
-	for i in range(grid_size.x):
-		for j in range (grid_size.y):
-			# TODO: source_id or atlas_coords
-			pattern.set_cell(Vector2i(i, j), -1, Vector2i(-1, -1), -1)
-	return pattern
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,7 +14,8 @@ func _ready() -> void:
 			cells[i].append(randi() % 2)
 	# TODO: ensure an open space around the starting area
 	# TODO: ensure an open space around some eventual goal area
+	print("Grid size is ", grid_size)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
